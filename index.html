@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Kartu Anniversary Responsif</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #2c2f54;
+      overflow-x: hidden;
+    }
+
+    #card-container {
+      width: 100%;
+      max-width: 600px;
+      height: 90vh;
+      max-height: 500px;
+      margin: 30px auto;
+      position: relative;
+      perspective: 1200px;
+    }
+
+    .card {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      transform-style: preserve-3d;
+      transition: all 0.8s ease;
+    }
+
+    .side {
+      width: 100%;
+      height: 100%;
+      padding: 20px;
+      border-radius: 16px;
+      overflow-y: auto;
+      position: absolute;
+      backface-visibility: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    .hal1 { background: #ff4f5a; color: white; z-index: 4; }
+    .hal2 { background: #fff; color: #333; z-index: 3; }
+    .hal3 { background: #fffbe6; color: #333; z-index: 2; }
+    .hal4 { background: #f0f8ff; color: #333; z-index: 1; }
+
+    .cover-photo img {
+      width: 40vw;
+      max-width: 150px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+      box-shadow: 0 3px 10px rgba(255,255,255,0.4);
+    }
+
+    h1, h2 {
+      font-size: 5vw;
+      margin-top: 10px;
+    }
+
+    p {
+      font-size: 4vw;
+      line-height: 1.5;
+    }
+
+    .photo-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 15px;
+    }
+
+    .photo-container img {
+      width: 80%;
+      max-width: 300px;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+    }
+
+    .btn {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      font-size: 3.5vw;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .btn-close {
+      background-color: #e74c3c;
+      left: 20px;
+      right: auto;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Love animation */
+    .love {
+      position: fixed;
+      font-size: 20px;
+      animation: fly 6s linear infinite;
+      color: pink;
+      pointer-events: none;
+    }
+
+    @keyframes fly {
+      0% {
+        transform: translateY(100vh) translateX(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) translateX(-30px);
+        opacity: 0;
+      }
+    }
+
+    /* Tombol musik */
+    #musicBtn {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 999;
+      padding: 10px 16px;
+      background: #f06292;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 4vw;
+      cursor: pointer;
+    }
+
+    /* Responsive tweaks */
+    @media (min-width: 600px) {
+      h1, h2 { font-size: 24px; }
+      p { font-size: 16px; }
+      .btn, #musicBtn { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Animasi Love -->
+<div id="love-container"></div>
+
+<!-- Tombol Musik Manual -->
+<button id="musicBtn" onclick="toggleMusic()">🎵 Musik</button>
+
+<!-- Kartu -->
+<div id="card-container">
+  <!-- Halaman 1 -->
+  <div class="card hal1" id="page1">
+    <div class="side">
+      <div class="cover-photo" style="text-align: center;">
+        <img src="sampul.jpeg" alt="Sampul">
+      </div>
+      <h1>💖 Happy Anniversary 💖</h1>
+      <p>Klik untuk membuka kartu</p>
+      <button class="btn" data-page="2">Buka Halaman 1</button>
+    </div>
+  </div>
+
+  <!-- Halaman 2 -->
+  <div class="card hal2 hidden" id="page2">
+    <div class="side">
+      <h2>Sayang...</h2>
+      <p>Sayang, gak kerasa ya… hari ini genap setahun kita bareng. Rasanya baru kemarin kenal, 
+        ketawa-ketawa gak jelas, saling malu-malu, 
+        tapi sekarang kamu udah jadi bagian yang gak bisa dipisahin dari hari-hari aku.
+        Aku masih inget momen pertama kita jadian—saling cuek, gengsi ,sampe akhirnya bisa sebucin ini. 
+        Hidup kuu berubah, jadi lebih indah karena ada kamu.</p>
+      <button class="btn" data-page="3">Buka Halaman 2</button>
+    </div>
+  </div>
+
+  <!-- Halaman 3 -->
+  <div class="card hal3 hidden" id="page3">
+    <div class="side">
+      <h2>Kita Lewatin Banyak Hal</h2>
+      <p>Selama setahun ini, kita udah ngelewatin banyak hal. Kadang ketawa bareng sampe sakit perut, 
+        kadang juga diem-dieman karena salah satu kita ada yg ngambek hahaha lucuu yaa. 
+        Tapi dari semua itu aku belajar satu hal hubungan yang sehat bukan yang selalu mulus, 
+        tapi yang saling milih buat tetap bareng walau lagi susah. Dan kamu,selalu milih buat tetep di sini, 
+        sama aku. Makasih udah kuat, udah sabar, udah terus percaya sama kita.</p>
+      <div class="photo-container">
+        <img src="foto.jpeg" alt="Kenangan">
+      </div>
+      <button class="btn" data-page="4">Buka Halaman 3</button>
+    </div>
+  </div>
+
+  <!-- Halaman 4 -->
+  <div class="card hal4 hidden" id="page4">
+    <div class="side">
+      <h2>Terima Kasih</h2>
+      <p>Aku gak tau apa yang bakal terjadi ke depan. Tapi satu hal yang pasti, aku mau jalanin semuanya sama kamu. 
+        Mau sedih atau seneng, aku pengennya bareng kamu terus. Satu tahun ini bukan akhir, 
+        tapi baru awal dari banyak tahun-tahun lain yang (semoga) bisa kita lewatin sama-sama. 
+        oia maaf ya aku cuma kasih card ini dan juga maaf ya belom bisa jadi yang terbaik buat kamu. 
+        Happy anniversary, Sayang.
+        Makasih udah jadi kamu—yang manis, kuat, dan selalu bikin aku jatuh cinta setiap hari. 💙</p>
+      <h2>I Love You! ❤️</h2>
+      <h2>Special For My Luvv Lidya💙</h2>
+      <button class="btn btn-close" onclick="closeCard()">Tutup Kartu</button>
+    </div>
+  </div>
+</div>
+
+<!-- Musik -->
+<audio id="bgMusic" src="music.mp3" preload="auto" loop></audio>
+
+<script>
+  const music = document.getElementById("bgMusic");
+  let isPlaying = false;
+
+  function toggleMusic() {
+    if (isPlaying) {
+      music.pause();
+      isPlaying = false;
+    } else {
+      music.play();
+      isPlaying = true;
+    }
+  }
+
+  function showPage(num) {
+    for (let i = 1; i <= 4; i++) {
+      document.getElementById("page" + i).classList.add("hidden");
+    }
+    document.getElementById("page" + num).classList.remove("hidden");
+  }
+
+  function closeCard() {
+    for (let i = 2; i <= 4; i++) {
+      document.getElementById("page" + i).classList.add("hidden");
+    }
+    document.getElementById("page1").classList.remove("hidden");
+    music.pause();
+    music.currentTime = 0;
+    isPlaying = false;
+  }
+
+  // Handle tombol ganti halaman
+  document.querySelectorAll('[data-page]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.page;
+      showPage(target);
+      if (target == 2 && music.paused) {
+        toggleMusic();
+      }
+    });
+  });
+
+  // Efek love terbang
+  function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("love");
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = 3 + Math.random() * 3 + "s";
+    heart.innerText = "❤️";
+    document.getElementById("love-container").appendChild(heart);
+
+    setTimeout(() => {
+      heart.remove();
+    }, 5000);
+  }
+  setInterval(createHeart, 500);
+</script>
+
+</body>
+</html>
